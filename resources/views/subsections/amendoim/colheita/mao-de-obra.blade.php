@@ -8,7 +8,7 @@
 <div class="card shadow-sm mb-4">
     <div class="card-body">
         <h3 class="text-center mb-4">Mão de Obra</h3> 
-        <form action="{{ route('calcularMaoDeObraColhedoras') }}" method="POST">
+        <form action="{{ route('calcular') }}" method="POST">
             @csrf
             <div class="form-group">
                 <label for="number59">Digite o custo unitário da hora de 1 operador de máquinas colhedoras:</label>

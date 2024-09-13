@@ -26,7 +26,6 @@
             @include('subsections.amendoim.plantio.insumos')
             @include('subsections.amendoim.plantio.mao-de-obra')
             @include('subsections.amendoim.plantio.maquinas-implementos')
-            @include('subsections.amendoim.plantio.operacoes')
     
             <h2>Manejo fitossanitário e adubação</h2>
             @include('subsections.amendoim.manejo.insumos')

@@ -7,7 +7,7 @@
 </script>
 <div class="card shadow-sm mb-4">
     <div class="card-body">
-        <h3 class="text-center mb-4">Maquinas e implementos (a cada 15 dias)</h3> 
+        <h3 class="text-center mb-4">Maquinas e implementos (a cada 6 dias)</h3> 
         <form action="{{ route('calcular') }}" method="POST">
             @csrf
             <div class="form-group">
@@ -79,9 +79,10 @@
                 <p>Grade aradora (4.2-7%/ano): <input type="text" class="form-control" value="{{ $result2 }}" readonly></p>
                 <p>Adubadora (4.2-7%/ano): <input type="text" class="form-control" value="{{ $result3 }}" readonly></p>
                 <p>Caminhão (4.2-10%/ano): <input type="text" class="form-control" value="{{ $result4 }}" readonly></p>
-                <p>Combustível (L/ha): <input type="text" class="form-control" value="{{ $result5 }}" readonly></p>
-                <p>Manutenção preventiva (6.6u/ha): <input type="text" class="form-control" value="{{ $result6 }}" readonly></p>
-                <p>Manutenção corretiva (2.2u/ha): <input type="text" class="form-control" value="{{ $result7 }}" readonly></p>
+                <p>Combustível de máquinas e implementos (8L/ha): <input type="text" class="form-control" value="{{ $result5 }}" readonly></p>
+                <p>Combustível de caminhões (12L/ha): <input type="text" class="form-control" value="{{ $result5 }}" readonly></p>
+                <p>Manutenção preventiva (1 manutenção/ha): <input type="text" class="form-control" value="{{ $result6 }}" readonly></p>
+                <p>Manutenção corretiva  (1 manutenção/ha): <input type="text" class="form-control" value="{{ $result7 }}" readonly></p>
             </div>
         </div>
         @endif

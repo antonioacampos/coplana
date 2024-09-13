@@ -12,7 +12,7 @@
         <form action="{{ route('calcular') }}" method="POST">
             @csrf
             <div class="form-group">
-                <label for="calcario">Digite o custo unitário do calcário (/100kg):</label>
+                <label for="calcario">Digite o custo unitário da tonelada do calcário:</label>
                 <input type="number" class="form-control" id="calcario" name="calcario" placeholder="Digite o custo do calcário" step="any" value="{{ old('calcario') }}">
                 @if ($errors->has('calcario'))
                     <span class="text-danger">{{ $errors->first('calcario') }}</span>
@@ -20,7 +20,7 @@
             </div>
 
             <div class="form-group">
-                <label for="gesso">Digite o custo unitário do gesso agrícola (/100kg):</label>
+                <label for="gesso">Digite o custo unitário da tonelada do gesso agrícola:</label>
                 <input type="number" class="form-control" id="gesso" name="gesso" placeholder="Digite o custo do gesso agrícola" step="any" value="{{ old('gesso') }}">
                 @if ($errors->has('gesso'))
                     <span class="text-danger">{{ $errors->first('gesso') }}</span>
@@ -36,8 +36,8 @@
             <button id="toggleResults" class="btn btn-secondary mt-3">Mostrar/Esconder Resultados Individuais</button>
             
             <div id="individualResults" class="mt-3" style="display:none;">
-                <p>Calcário (2 ton): <input type="text" class="form-control" value="{{ $result1 }}" readonly></p>
-                <p>Gesso Agrícola (1,5 ton, a lanço): <input type="text" class="form-control" value="{{ $result2 }}" readonly></p>
+                <p>Calcário (2,5 ton/ha): <input type="text" class="form-control" value="{{ $result1 }}" readonly></p>
+                <p>Gesso Agrícola (1,5 ton/ha): <input type="text" class="form-control" value="{{ $result2 }}" readonly></p>
             </div>
         </div>
         @endif

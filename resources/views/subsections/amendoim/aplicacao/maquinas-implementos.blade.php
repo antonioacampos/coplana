@@ -8,7 +8,7 @@
 
 <div class="card shadow-sm mb-4">
     <div class="card-body">
-        <h3 class="text-center mb-4">Depreciação e custos operacionais (2 meses)</h3>
+        <h3 class="text-center mb-4">Depreciação e custos operacionais (a cada 2 dias)</h3>
         <form action="{{ route('calcular') }}" method="POST">
             @csrf
             <div class="form-group">
@@ -28,7 +28,7 @@
             </div>
 
             <div class="form-group">
-                <label for="number3">Digite o custo unitário de 1 adubadora:</label>
+                <label for="number3">Digite o custo unitário de 1 distribuidor de calcário e gesso agrícola:</label>
                 <input type="number" class="form-control" id="number3" name="number3" placeholder="Digite o custo unitário" step="any" value="{{ old('number3') }}">
                 @if ($errors->has('number3'))
                     <span class="text-danger">{{ $errors->first('number3') }}</span>
@@ -44,7 +44,7 @@
             </div>
 
             <div class="form-group">
-                <label for="number5">Digite o custo unitário do combustível:</label>
+                <label for="number5">Digite o custo unitário do litro do combustível:</label>
                 <input type="number" class="form-control" id="number5" name="number5" placeholder="Digite o custo unitário" step="any" value="{{ old('number5') }}">
                 @if ($errors->has('number5'))
                     <span class="text-danger">{{ $errors->first('number5') }}</span>
@@ -80,7 +80,7 @@
                 <p>Grade aradora (7-16.7%/ano): <input type="text" class="form-control" value="{{ $result2 }}" readonly></p>
                 <p>Adubadora (9-16.7%/ano): <input type="text" class="form-control" value="{{ $result3 }}" readonly></p>
                 <p>Caminhão (%/ano): <input type="text" class="form-control" value="{{ $result4 }}" readonly></p>
-                <p>Combustível (L/ha): <input type="text" class="form-control" value="{{ $result5 }}" readonly></p>
+                <p>Combustível (13L/ha - 5L máquinas e implementos + 8L caminhões): <input type="text" class="form-control" value="{{ $result5 }}" readonly></p>
                 <p>Manutenção preventiva (6.6u/ha): <input type="text" class="form-control" value="{{ $result6 }}" readonly></p>
                 <p>Manutenção corretiva (2.2u/ha): <input type="text" class="form-control" value="{{ $result7 }}" readonly></p>
             </div>

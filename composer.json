@@ -21,6 +21,8 @@
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.5",
         "league/commonmark": "^2.5",
+        "socialiteproviders/discord": "^4.2",
+        "socialiteproviders/vercel": "^4.2",
         "spatie/commonmark-highlighter": "^3.0",
         "symfony/yaml": "^7.1"
     },

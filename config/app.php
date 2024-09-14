@@ -176,6 +176,8 @@ return [
         App\Providers\RouteServiceProvider::class,
         App\Providers\MarkdownServiceProvider::class,
         App\Providers\MarkdownServiceProvider::class,
+
+        SocialiteProviders\Manager\ServiceProvider::class, 
     ],
 
     /*

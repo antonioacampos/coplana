@@ -30,4 +30,9 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'vercel' => [    
+        'client_id' => env('VERCEL_CLIENT_ID'),  
+        'client_secret' => env('VERCEL_CLIENT_SECRET'),  
+        'redirect' => env('VERCEL_REDIRECT_URI') 
+    ],
 ];

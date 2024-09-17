@@ -47,7 +47,12 @@ class InputController extends Controller
              ['name' => 'combustivel', 'label' => 'Custo unitário do litro de combustível:', 'placeholder' => 'Digite o Custo unitário do litro de combustível'],
              ['name' => 'manutencao_preventiva', 'label' => 'Custo unitário das Manutenções Preventivas:', 'placeholder' => 'Digite o custo unitário das Manutenções Preventivas'],
              ['name' => 'manutencao_corretiva', 'label' => 'Custo unitário das Manutenções Corretivas:', 'placeholder' => 'Digite o custo unitário das Manutenções Corretivas'],
-             
+             ['name' => 'depreciacao_tratores', 'label' => 'Custo untário de 1 Trator Agrícola:', 'placeholder' => 'Digite o Custo untário de 1 Trator Agrícola'],
+             ['name' => 'depreciacao_grades_aradoras', 'label' => 'Custo untário de 1 Grade Aradora:', 'placeholder' => 'Digite o Custo untário de 1 Grade Aradora'],
+             ['name' => 'depreciacao_distribuidor_calcario', 'label' => 'Custo untário de 1 Distribuidor de calcário gesso agrícola:', 'placeholder' => 'Digite o Custo untário de 1 Distribuidor de calcário gesso agrícola'],
+             ['name' => 'depreciacao_caminhoes', 'label' => 'Custo untário de 1 Caminhão:', 'placeholder' => 'Digite o Custo untário de 1 Caminhão'],
+
+
              // Inputs de mão de obra
              ['name' => 'tecnico_agricola', 'label' => 'Custo unitário da hora para 1 Técnico Agrícola:', 'placeholder' => 'Digite o custo unitário da hora para 1 Técnico Agrícola'],
              ['name' => 'operador_trator', 'label' => 'Custo unitário da hora para 1 Operador de Tratores Agrícolas:', 'placeholder' => 'Digite o custo unitário da hora para 1 Operador de Tratores Agrícolas'],
@@ -67,7 +72,10 @@ class InputController extends Controller
             ['name' => 'combustivel', 'label' => 'Custo unitário do litro de combustível:', 'placeholder' => 'Digite o Custo unitário do litro de combustível'],
             ['name' => 'manutencao_preventiva', 'label' => 'Custo unitário das Manutenções Preventivas:', 'placeholder' => 'Digite o custo unitário das Manutenções Preventivas'],
             ['name' => 'manutencao_corretiva', 'label' => 'Custo unitário das Manutenções Corretivas:', 'placeholder' => 'Digite o custo unitário das Manutenções Corretivas'],
-            
+            ['name' => 'depreciacao_tratores', 'label' => 'Custo untário de 1 Trator Agrícola:', 'placeholder' => 'Digite o Custo untário de 1 Trator Agrícola'],
+            ['name' => 'depreciacao_plantadeira', 'label' => 'Custo untário de 1 Plantadeira de precisão:', 'placeholder' => 'Digite o Custo untário de 1 Plantadeira de precisão'],
+            ['name' => 'depreciacao_caminhoes', 'label' => 'Custo untário de 1 Caminhão:', 'placeholder' => 'Digite o Custo untário de 1 Caminhão'],
+
             // Inputs de mão de obra
             ['name' => 'tecnico_agricola', 'label' => 'Custo unitário da hora para 1 Técnico Agrícola:', 'placeholder' => 'Digite o custo unitário da hora para 1 Técnico Agrícola'],
             ['name' => 'operador_trator', 'label' => 'Custo unitário da hora para 1 Operador de Trator Agrícola:', 'placeholder' => 'Digite o custo unitário da hora para 1 Operador de Trator Agrícola'],
@@ -90,7 +98,12 @@ class InputController extends Controller
             ['name' => 'combustivel', 'label' => 'Custo unitário do litro de combustível:', 'placeholder' => 'Digite o Custo unitário do litro de combustível'],
             ['name' => 'manutencao_preventiva', 'label' => 'Custo unitário das Manutenções Preventivas:', 'placeholder' => 'Digite o custo unitário das Manutenções Preventivas'],
             ['name' => 'manutencao_corretiva', 'label' => 'Custo unitário das Manutenções Corretivas:', 'placeholder' => 'Digite o custo unitário das Manutenções Corretivas'],
-            
+            ['name' => 'depreciacao_tratores', 'label' => 'Custo untário de 1 Trator Agrícola:', 'placeholder' => 'Digite o Custo untário de 1 Trator Agrícola'],
+            ['name' => 'depreciacao_pulverizador', 'label' => 'Custo untário de 1 Pulverizador:', 'placeholder' => 'Digite o Custo untário de 1 Pulverizador'],
+            ['name' => 'depreciacao_distribuidora_fertilizantes', 'label' => 'Custo untário de 1 Distribuidora de fertilizantes:', 'placeholder' => 'Digite o Custo untário de 1 Distribuidora de fertilizantes'],
+            ['name' => 'depreciacao_distribuidora_corretivos', 'label' => 'Custo untário de 1 Distribuidora de corretivos:', 'placeholder' => 'Digite o Custo untário de 1 Distribuidora de corretivos'],
+            ['name' => 'depreciacao_caminhoes', 'label' => 'Custo untário de 1 Caminhão:', 'placeholder' => 'Digite o Custo untário de 1 Caminhão'],
+
             // Inputs de mão de obra
             ['name' => 'tecnico_agricola', 'label' => 'Custo unitário da hora para 1 Técnico Agrícola:', 'placeholder' => 'Digite o custo unitário da hora para 1 Técnico Agrícola'],
             ['name' => 'operador_trator', 'label' => 'Custo unitário da hora para 1 Operador de Tratores Agrícolas:', 'placeholder' => 'Digite o custo unitário da hora para 1 Operador de Tratores Agrícolas'],

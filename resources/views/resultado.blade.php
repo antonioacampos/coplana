@@ -1,14 +1,14 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+<div class="container mt-3">
     <h1>Resultados da Calculadora</h1>
 
     @if(!empty($selectedSections))
         <h2>Seções Selecionadas:</h2>
         <ul>
             @foreach($selectedSections as $section)
-                <li>{{ ucfirst($section) }}</li>
+                <h6>{{ ucfirst($section) }}</h6>
             @endforeach
         </ul>
 
@@ -16,17 +16,15 @@
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th>Input</th>
-                    <th>Valor Original</th>
-                    <th>Valor Final (Multiplicado por 2.2)</th>
+                    <th>Campo</th>
+                    <th>Valor Final</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach($finalResults as $inputName => $inputValue)
                     <tr>
                         <td>{{ ucfirst(str_replace('_', ' ', $inputName)) }}</td>
-                        <td>{{ is_numeric($inputValue) ? $inputValue / 2.2 : 'Valor inválido' }}</td>
-                        <td>{{ $inputValue }}</td>
+                        <td>R$ {{ $inputValue }}</td>
                     </tr>
                 @endforeach
             </tbody>

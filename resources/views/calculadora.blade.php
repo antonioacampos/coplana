@@ -2,11 +2,14 @@
 
 @section('content')
 <div class="d-flex justify-content-center align-items-center">
-    <div class="w-100" style="max-width: 600px;">
-        <h1>Calculadora do Amendoim</h1>
-        <h2>Selecione as seções para calcular</h2>
+    <div class="w-100 card mt-2" style="max-width: 600px;">
+        <div class="card-body p-0">
+            <div  class="card-header">
+                <h1>Calculadora do Amendoim</h1>
+                <h2>Selecione as seções para calcular</h2>
+            </div>
         <form id="sectionForm">
-            <div class="form-group">
+            <div class="form-group p-3">
                 <input type="checkbox" id="preparo" name="sections[]" value="preparo">
                 <label for="preparo">Preparo do solo</label><br>
                 <input type="checkbox" id="aplicacao" name="sections[]" value="aplicacao">
@@ -18,11 +21,11 @@
                 <input type="checkbox" id="colheita" name="sections[]" value="colheita">
                 <label for="colheita">Colheita</label><br>
             </div>
-            <button type="button" class="btn btn-primary" onclick="loadInputs()">Carregar Inputs</button>
-            <button type="button" class="btn btn-success mt-3" onclick="submitData()">Enviar Dados</button>
+            <button type="button" class="btn btn-primary m-2" onclick="loadInputs()">Carregar Inputs</button>
+            <button type="button" class="btn btn-success m-2" onclick="submitData()">Enviar Dados</button>
         </form>
-
-        <div id="inputFields"></div>
+        <div id="inputFields" class="m-2"></div>
+        </div>
     </div>
 </div>
 

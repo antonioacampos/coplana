@@ -1,6 +1,6 @@
 {
     "version": 2,
-    "name": "my-laravel-project",
+    "name": "coplana",
     "builds": [
       {
         "src": "api/index.php",

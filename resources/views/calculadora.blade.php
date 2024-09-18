@@ -5,6 +5,8 @@
     <div class="w-100 card mt-2" style="max-width: 600px;">
         <div class="card-body p-0">
             <div  class="card-header">
+                <a href="./"><h6>Página inicial</h6></a>
+
                 <h1>Calculadora do Amendoim</h1>
                 <h2>Selecione as seções para calcular</h2>
             </div>

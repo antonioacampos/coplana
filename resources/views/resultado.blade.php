@@ -2,6 +2,7 @@
 
 @section('content')
 <div class="container mt-3">
+    <a href="./"><h6>Página inicial</h6></a>
     <h1>Resultados da Calculadora</h1>
 
     @if(!empty($selectedSections))

@@ -3,14 +3,14 @@
     "name": "coplana",
     "builds": [
       {
-        "src": "api/index.php",
+        "src": "api/api/index.php",
         "use": "@vercel/php"
       }
     ],
     "routes": [
       {
         "src": "/(.*)",
-        "dest": "/api/index.php"
+        "dest": "/api/api/index.php"
       }
     ]
   }

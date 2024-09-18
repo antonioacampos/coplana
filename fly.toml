@@ -1,0 +1,34 @@
+app = "coplana"  # Nome da aplicação
+
+[env]
+  # Variáveis de ambiente
+  APP_ENV = "production"
+  APP_KEY = "base64:JaQzLQ8pcnB65orZZqU04Zx6zSP4P3SXgebPnLOCGh8="
+
+[build]
+  # Isso indica qual Dockerfile será usado, se você estiver utilizando Docker para construir a aplicação.
+  dockerfile = "./Dockerfile"
+
+[services]
+  # Definir serviços da aplicação, como HTTP/HTTPS
+  [[services]]
+    internal_port = 80  # Porta no contêiner que será exposta
+    protocol = "tcp"     # Protocolo usado (neste caso, HTTP)
+    
+    [[services.ports]]
+      handlers = ["http"]
+      port = 80  # Porta que o Fly.io expõe para o mundo
+    
+    [[services.ports]]
+      handlers = ["tls", "http"]
+      port = 443  # Para HTTPS, se você quiser habilitar TLS/SSL
+    
+    [[services.http_checks]]
+      interval = "10s"  # Verifica se a aplicação está respondendo a cada 10 segundos
+      grace_period = "5s"
+      method = "get"
+      path = "/"
+      protocol = "http"
+      timeout = "2s"
+      tls_skip_verify = false
+      restart_limit = 0

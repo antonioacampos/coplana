@@ -2,5 +2,10 @@
 ## Faculdade de Ciências Agrárias e Veterinárias
 
 ### Projeto Coplana
-Desenvolvimento de um simulador de custos para 4 culturas:
+Desenvolvimento de uma estrutura de custos para 4 culturas:
 Soja, milho, Cana-de-Açúcar planta e soca
+
+Sistema derivado de pesquisa
+proveniente do IPJAB (Instituto de Pesquisas de Jaboticabal)
+em parceria com a Universidade Estadual de São Paulo
+Campus FCAV, destinado à Coplana Cooperativa Agroindustrial

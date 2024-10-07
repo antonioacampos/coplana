@@ -12,13 +12,11 @@ class CalculadoraController extends Controller
     }
     public function index()
     {
-        // dd(Preparo::list());
         return view('calculadora');
     }
 
     public function calcular(Request $request)
     {
-        // Verifique se os dados estão sendo recebidos
         if (!$request->has('sections') || !$request->has('inputs')) {
             return response()->json([
                 'error' => 'Dados inválidos',
@@ -28,7 +26,6 @@ class CalculadoraController extends Controller
         $selectedSections = $request->input('sections');  // Seções selecionadas
         $inputs = $request->input('inputs');              // Valores dos inputs
 
-        // Defina os fatores multiplicadores para cada item em cada seção
         $multiplicadores = [
             'preparo' => [
                 'gradagem_pesada' => 1.0,
@@ -127,34 +124,28 @@ class CalculadoraController extends Controller
                 'manuseador_carregador' => 24.0,
                 'motoristas_caminhao' => 2.0,
             ]
-        ];        
-        // Iniciar resultados finais
+        ];
+
         $finalResults = [];
 
-        // Processar os dados
         foreach ($inputs as $inputName => $inputValue) {
             if (is_numeric($inputValue)) {
-                $inputResult = 0;
-                
-                // Verificar as seções selecionadas e aplicar os multiplicadores
                 foreach ($selectedSections as $section) {
                     if (isset($multiplicadores[$section]) && isset($multiplicadores[$section][$inputName])) {
-                        // Multiplica o input pelo multiplicador da seção
-                        $inputResult += $inputValue * $multiplicadores[$section][$inputName];
+                        $finalResults[$section][$inputName] = $inputValue * $multiplicadores[$section][$inputName];
                     }
                 }
-
-                // Armazenar o resultado final para o input
-                $finalResults[$inputName] = $inputResult;
             } else {
-                $finalResults[$inputName] = "Valor inválido";
+                foreach ($selectedSections as $section) {
+                    $finalResults[$section][$inputName] = "Valor inválido";
+                }
             }
         }
 
-        // Retorna a view com os dados
         return view('resultado', [
             'selectedSections' => $selectedSections,
             'finalResults' => $finalResults
         ]);
     }
+
 }

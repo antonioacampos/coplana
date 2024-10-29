@@ -2,11 +2,11 @@
 
 namespace App\Models;
 
-class Soja
+class Amendoim
 {
     protected $sectionInputs = [
         'preparo' => [
-            ['name' => 'gradagem_pesada', 'label' => 'Custo unitário da passagem da Gradagem Pesada para soja:', 'placeholder' => 'Digite o custo unitário da passagem da Gradagem Pesada'],
+            ['name' => 'gradagem_pesada', 'label' => 'Custo unitário da passagem da Gradagem Pesada:', 'placeholder' => 'Digite o custo unitário da passagem da Gradagem Pesada'],
             ['name' => 'aracao_iveca', 'label' => 'Custo unitário da passagem da Aração (Iveca):', 'placeholder' => 'Digite o custo unitário da passagem da Aração (Iveca)'],
             ['name' => 'gradagem_intermediaria', 'label' => 'Custo unitário da passagem da Gradagem Intermediária:', 'placeholder' => 'Digite o custo unitário da passagem da Gradagem Intermediária'],
             ['name' => 'gradagem_niveladora', 'label' => 'Custo unitário da passagem da Gradagem Niveladora:', 'placeholder' => 'Digite o custo unitário da passagem da Gradagem Niveladora'],
@@ -122,16 +122,20 @@ class Soja
         ],
     ];
 
-    public static function getInputsForSections()
-    {
-        // $inputs = [];
-
-        // foreach ($sections as $section) {
-        //     if (isset($this->sectionInputs[$section])) {
-        //         $inputs = array_merge($inputs, $this->sectionInputs[$section]);
-        //     }
-        // }
-
+    public static function getInputs(){
         return $sectionInputs;
+    }
+
+    public function getInputsForSections(array $sections)
+    {
+        $inputs = [];
+
+        foreach ($sections as $section) {
+            if (isset($this->sectionInputs[$section])) {
+                $inputs = array_merge($inputs, $this->sectionInputs[$section]);
+            }
+        }
+
+        return $this->removeDuplicateInputs($inputs);
     }
 }

@@ -7,18 +7,11 @@
     </div>
     <div class="card-body">
       <h2>Calculadoras:</h2>
-      <a href="./calculadora-soja">
-        <h3>Cultura de soja</h3>
+      @foreach ($cropTypes as $cropType)
+      <a href="{{ route('calculadora', ['cropType' => $cropType]) }}">
+        <h3>Cultura de {{ $cropType }}</h3>
       </a>
-      <a href="./calculadora-amendoim">
-        <h3>Cultura de amendoim</h3>
-      </a>
-      <a href="./calculadora-cana-planta">
-        <h3>Cultura de cana-de-açúcar (planta)</h3>
-      </a>
-      <a href="./calculadora-cana-soca">
-        <h3>Cultura de cana-de-açúcar (soca)</h3>
-      </a>
+      @endforeach
     </div>
   </div>
 @endsection

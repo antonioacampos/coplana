@@ -9,7 +9,7 @@
     <div class="card mb-2 mt-2 p-2">
       <h6 class="m-1">Valor total da produção: R$ {{ number_format($totalSum, 2, ',', '.') }}</h6>
     </div>
-    <a href="{{ route('export.csv', ['sections' => $selectedSections, 'results' => $finalResults]) }}"
+    <a href="{{ route('export.csv', ['sections' => $selectedSections, 'results' => $finalResults,   'cropType' => $cropType]) }}"
       class="btn m-1 btn-primary">Exportar CSV</a>
     <a href="{{ route('export.pdf', ['sections' => $selectedSections, 'results' => $finalResults]) }}"
       class="btn btn-danger">Exportar PDF</a>

@@ -3,26 +3,27 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Preparo;
 use Barryvdh\DomPDF\Facade\PDF;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class InterfaceController extends Controller
 {
-    public static function list(){
-        if(!is_dir(storage_path("app/inputs"))){
-            mkdir(storage_path("app/inputs"),0755);
+    public static function list()
+    {
+        if (!is_dir(storage_path("app/inputs"))) {
+            mkdir(storage_path("app/inputs"), 0755);
         }
 
         $path = storage_path('app/inputs/*.json');
-        $files = glob($path); 
+        $files = glob($path);
 
         return array_map(function($file) {
             return pathinfo($file, PATHINFO_FILENAME);
         }, $files);
     }
 
-    public function home(){
+    public function home()
+    {
         $cropTypes = SELF::list();
         return view('welcome', compact('cropTypes'));
     }
@@ -30,13 +31,25 @@ class InterfaceController extends Controller
     public function index($cropType)
     {
         $inputs = [];
-        return view('inputPage', compact('inputs', 'cropType'));   
+
+        $allSections = $this->loadJsonData($cropType);
+
+        if (!$allSections) {
+            return back()->withErrors('Arquivo de dados não encontrado');
+        }
+    
+        $sectionLabels = [];
+        foreach ($allSections as $sectionKey => $sectionData) {
+            $sectionLabels[$sectionKey] = $sectionData['label'] ?? ucfirst($sectionKey);
+        }
+
+        return view('inputPage', compact('inputs', 'cropType', 'sectionLabels'));
     }
 
     protected function loadJsonData($cropType)
     {
         $filePath = storage_path("app/inputs/{$cropType}.json");
-        
+
         if (!file_exists($filePath)) {
             return null;
         }
@@ -53,16 +66,21 @@ class InterfaceController extends Controller
             return back()->withErrors('Arquivo de dados não encontrado');
         }
 
+        $sectionLabels = [];
+        foreach ($allSections as $sectionKey => $sectionData) {
+            $sectionLabels[$sectionKey] = $sectionData['label'] ?? ucfirst($sectionKey);
+        }
+
         $inputs = [];
 
         foreach ($selectedSections as $section) {
-            if (isset($allSections[$section])) {
-                $inputs = array_merge($inputs, $allSections[$section]);
+            if (isset($allSections[$section]['content'])) {
+                $inputs = array_merge($inputs, $allSections[$section]['content']);
             }
         }
 
         $inputs = $this->removeDuplicateInputs($inputs);
-        return view('inputPage', compact('inputs', 'selectedSections', 'cropType'));
+        return view('inputPage', compact('inputs', 'selectedSections', 'cropType', 'sectionLabels'));
     }
 
     protected function removeDuplicateInputs($inputs)
@@ -104,14 +122,15 @@ class InterfaceController extends Controller
 
         $finalResults = [];
         $totalSum = 0;
-
         foreach ($inputs as $inputName => $inputValue) {
             if (is_numeric($inputValue)) {
                 foreach ($selectedSections as $section) {
-                    if (isset($multiplicadores[$section])) {
-                        foreach ($multiplicadores[$section] as $subsection => $items) {
-                            if (isset($items[$inputName])) {
-                                $resultado = $inputValue * $items[$inputName];
+                    if (isset($multiplicadores[$section]['content'])) {
+                        // Itera sobre cada subseção dentro de "content"
+                        foreach ($multiplicadores[$section]['content'] as $subsection => $subsectionData) {
+                            if (isset($subsectionData['multiplicadores'][$inputName])) {
+                                // Acessa o multiplicador específico
+                                $resultado = $inputValue * $subsectionData['multiplicadores'][$inputName];
                                 $finalResults[$section][$subsection][$inputName] = $resultado;
                                 $totalSum += $resultado;
                             }
@@ -125,15 +144,26 @@ class InterfaceController extends Controller
             }
         }
 
+        $sectionLabels = [];
+        foreach ($multiplicadores as $sectionKey => $sectionData) {
+            $sectionLabels[$sectionKey] = $sectionData['label'] ?? ucfirst($sectionKey);
+            if (isset($sectionData['content'])) {
+                foreach ($sectionData['content'] as $subsectionKey => $subsectionData) {
+                    $sectionLabels[$sectionKey . '.' . $subsectionKey] = $subsectionData['label'] ?? ucfirst($subsectionKey);
+                }
+            }
+        }
+        
+        // dd($cropType, $selectedSections,$finalResults,$totalSum);
         return view('displayResults', [
             'cropType' => $cropType,
             'selectedSections' => $selectedSections,
             'finalResults' => $finalResults,
-            'totalSum' => $totalSum
+            'totalSum' => $totalSum,
+            'sectionLabels' => $sectionLabels
         ]);
     }
 
-    
     public function exportCsv(Request $request)
     {
         $selectedSections = $request->input('sections');
@@ -176,16 +206,41 @@ class InterfaceController extends Controller
         return $response;
     }
 
-
     public function exportPdf(Request $request)
     {
         $selectedSections = $request->input('sections');
         $finalResults = $request->input('results');
+        $cropType = $request->input('cropType');
+    
+        $multiplicadoresPath = storage_path("app/multiplicadores/{$cropType}.json");
+    
+        if (!file_exists($multiplicadoresPath)) {
+            return back()->withErrors('Arquivo de multiplicadores não encontrado.');
+        }
+    
+        $multiplicadores = json_decode(file_get_contents($multiplicadoresPath), true);
+    
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            return back()->withErrors('Erro ao decodificar o arquivo JSON de multiplicadores.');
+        }
+    
+        $sectionLabels = [];
+        foreach ($multiplicadores as $sectionKey => $sectionData) {
+            $sectionLabels[$sectionKey] = $sectionData['label'] ?? ucfirst($sectionKey);
+            if (isset($sectionData['content'])) {
+                foreach ($sectionData['content'] as $subsectionKey => $subsectionData) {
+                    $sectionLabels[$sectionKey . '.' . $subsectionKey] = $subsectionData['label'] ?? ucfirst($subsectionKey);
+                }
+            }
+        }
+    
         $pdf = PDF::loadView('exportResults', [
             'selectedSections' => $selectedSections,
             'finalResults' => $finalResults,
+            'sectionLabels' => $sectionLabels
         ]);
-
+    
         return $pdf->download('resultados.pdf');
     }
+    
 }

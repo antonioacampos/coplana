@@ -16,16 +16,10 @@
         <form id="sectionForm" method="POST" action="{{ route('get.inputs', ['cropType' => $cropType]) }}">
           @csrf
           <div class="form-group p-3">
-            <input type="checkbox" id="preparo" name="sections[]" value="preparo">
-            <label for="preparo">Preparo do solo</label><br>
-            <input type="checkbox" id="aplicacao" name="sections[]" value="aplicacao">
-            <label for="aplicacao">Aplicação de corretivos</label><br>
-            <input type="checkbox" id="plantio" name="sections[]" value="plantio">
-            <label for="plantio">Plantio</label><br>
-            <input type="checkbox" id="manejo" name="sections[]" value="manejo">
-            <label for="manejo">Manejo</label><br>
-            <input type="checkbox" id="colheita" name="sections[]" value="colheita">
-            <label for="colheita">Colheita</label><br>
+            @foreach ($sectionLabels as $sectionKey => $sectionLabel)
+              <input type="checkbox" id="{{ $sectionKey }}" name="sections[]" value="{{ $sectionKey }}">
+              <label for="{{ $sectionKey }}">{{ $sectionLabel }}</label><br>
+            @endforeach
           </div>
 
           <button type="submit" class="btn btn-primary m-2">Carregar Inputs</button>
@@ -44,8 +38,8 @@
             <div id="inputFields" class="m-2">
               @foreach ($inputs as $input)
                 <div class="form-group">
-                  <label for="{{ $input['name'] }}">Digite o custo unitário de {{ $input['label'] }}</label>
-                  <input type="number" class="form-control" id="{{ $input['name'] }}" name="inputs[{{ $input['name'] }}]"
+                  <label for="{{ $input['name'] }}">Digite o custo unitário de {{ $input['label'] }}:</label>
+                  <input type="number" step="any" class="form-control" id="{{ $input['name'] }}" name="inputs[{{ $input['name'] }}]"
                     placeholder="Custo unitário de {{ $input['label'] }}" required>
                 </div>
               @endforeach

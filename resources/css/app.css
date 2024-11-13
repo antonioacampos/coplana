@@ -1,0 +1,22 @@
+body {
+    background-image: url('{{ asset('background2.jpg') }}'); /* Substitua pelo caminho correto */
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    font-family: Arial, sans-serif;
+  }
+
+ 
+  .card-header h1, .card-header h2, .card-header a, .card-body {
+    color: white;
+  }
+
+  .card {
+    background-color: rgba(10, 23, 55, 0.7) !important;
+  } 
+
+  .btn-primary, .btn-success {
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-weight: bold;
+  }

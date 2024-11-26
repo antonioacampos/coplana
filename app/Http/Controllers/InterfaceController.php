@@ -52,13 +52,17 @@ class InterfaceController extends Controller
         $finalResults = $calcDTO['finalResults'];
         $totalSum = $calcDTO['totalSum'];
         $sectionLabels = $calcDTO['sectionLabels'];
+        $sectionTotals = $calcDTO['sectionTotals'];
+        $subsectionTotals = $calcDTO['subsectionTotals'];
 
         return view('displayResults', [
             'cropType' => $cropType,
             'selectedSections' => $selectedSections,
             'finalResults' => $finalResults,
             'totalSum' => $totalSum,
-            'sectionLabels' => $sectionLabels
+            'sectionLabels' => $sectionLabels,
+            'sectionTotals' => $sectionTotals,
+            'subsectionTotals' => $subsectionTotals
         ]);
     }
 

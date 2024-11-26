@@ -3,7 +3,8 @@
 @section('content')
   <div class="container p-2 pt-3 mt-3 mb-3">
     <a href="./">
-      <h6>< Página inicial</h6>
+      <h6>
+        < Página inicial</h6>
     </a>
     <h1>Resultados da Calculadora</h1>
     <div class="card mb-2 mt-2 p-2">
@@ -17,9 +18,12 @@
     @if (!empty($selectedSections))
       @foreach ($selectedSections as $section)
         <h2>{{ $sectionLabels[$section] ?? ucfirst($section) }}:</h2>
+        <h5>Custo da seção: R$ {{ number_format($sectionTotals[$section] ?? 0, 2, ',', '.') }}</h5>
+        <br>
         @if (isset($finalResults[$section]))
           @foreach ($finalResults[$section] as $subsection => $values)
-            <h4>{{ $sectionLabels[$section . '.' . $subsection] ?? ucfirst(str_replace('_', ' ', $subsection)) }}:</h4>
+            <h4>{{ $sectionLabels[$section . '.' . $subsection] ?? ucfirst(str_replace('_', ' ', $subsection)) }}</h4>
+            <h6>Custo da subseção: R$ {{ number_format($subsectionTotals[$section][$subsection] ?? 0, 2, ',', '.') }}</h6>
             <table class="table table-striped">
               <thead>
                 <tr>
@@ -46,6 +50,7 @@
         @else
           <p>Nenhuma subseção encontrada para esta seção.</p>
         @endif
+        <hr style = "background-color: white; padding: 2px">
       @endforeach
     @else
       <p>Nenhuma seção foi selecionada.</p>
@@ -53,26 +58,33 @@
   </div>
 @endsection
 
-
 <style>
   body {
-    background-image: url('{{ asset('background3.png') }}'); /* Substitua pelo caminho correto */
+    background-image: url('{{ asset('background3.webp') }}');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
     font-family: Arial, sans-serif;
+    overflow-x: hidden;
   }
 
- 
-  .card-header h1, .card-header h2, .card-header a, .card-body, .container, th, td {
+  .card-header h1,
+  .card-header h2,
+  .card-header a,
+  .card-body,
+  .container,
+  th,
+  td {
     color: white;
   }
 
-  .card,.container {
+  .card,
+  .container {
     background-color: rgba(10, 55, 23, 0.7) !important;
-  } 
+  }
 
-  .btn-primary, .btn-success {
+  .btn-primary,
+  .btn-success {
     border-radius: 5px;
     padding: 10px 20px;
     font-weight: bold;

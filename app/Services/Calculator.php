@@ -3,7 +3,7 @@
 namespace App\Services;
 
 class Calculator
-{ 
+{
     public static function listInputs()
     {
         if (!is_dir(storage_path("app/inputs"))) {
@@ -13,7 +13,7 @@ class Calculator
         $path = storage_path('app/inputs/*.json');
         $files = glob($path);
 
-        return array_map(function($file) {
+        return array_map(function ($file) {
             return pathinfo($file, PATHINFO_FILENAME);
         }, $files);
     }
@@ -36,7 +36,7 @@ class Calculator
         if (!$allSections) {
             return back()->withErrors('Arquivo de dados não encontrado');
         }
-    
+
         $sectionLabels = [];
         foreach ($allSections as $sectionKey => $sectionData) {
             $sectionLabels[$sectionKey] = $sectionData['label'] ?? ucfirst($sectionKey);
@@ -60,9 +60,9 @@ class Calculator
         return $uniqueInputs;
     }
 
-    public static function getInputs($selectedSections, $cropType)
+    public static function getInputs($selectedSections, $jsonName)
     {
-        $allSections = SELF::loadJsonData($cropType);
+        $allSections = SELF::loadJsonData($jsonName);
 
         $inputsDTO = [];
 
@@ -90,10 +90,9 @@ class Calculator
         return $inputsDTO;
     }
 
-    public static function calculate($cropType, $selectedSections, $inputs)
+    public static function calculate($jsonName, $selectedSections, $inputs)
     {
-        
-        $multiplicadoresPath = storage_path("app/multiplicadores/{$cropType}.json");
+        $multiplicadoresPath = storage_path("app/multiplicadores/{$jsonName}.json");
 
         if (!file_exists($multiplicadoresPath)) {
             return response()->json(['error' => 'Arquivo de multiplicadores não encontrado'], 404);
@@ -106,17 +105,30 @@ class Calculator
         }
 
         $finalResults = [];
+        $sectionTotals = [];
+        $subsectionTotals = [];
         $totalSum = 0;
+
         foreach ($inputs as $inputName => $inputValue) {
             if (is_numeric($inputValue)) {
                 foreach ($selectedSections as $section) {
                     if (isset($multiplicadores[$section]['content'])) {
-                        // Itera sobre cada subseção dentro de "content"
                         foreach ($multiplicadores[$section]['content'] as $subsection => $subsectionData) {
                             if (isset($subsectionData['multiplicadores'][$inputName])) {
-                                // Acessa o multiplicador específico
                                 $resultado = $inputValue * $subsectionData['multiplicadores'][$inputName];
+
                                 $finalResults[$section][$subsection][$inputName] = $resultado;
+
+                                if (!isset($subsectionTotals[$section][$subsection])) {
+                                    $subsectionTotals[$section][$subsection] = 0;
+                                }
+                                $subsectionTotals[$section][$subsection] += $resultado;
+
+                                if (!isset($sectionTotals[$section])) {
+                                    $sectionTotals[$section] = 0;
+                                }
+                                $sectionTotals[$section] += $resultado;
+
                                 $totalSum += $resultado;
                             }
                         }
@@ -139,22 +151,27 @@ class Calculator
             }
         }
 
-        $calcDTO['selectedSections'] = $selectedSections;
-        $calcDTO['finalResults'] = $finalResults;
-        $calcDTO['totalSum'] = $totalSum;
-        $calcDTO['sectionLabels'] = $sectionLabels;
+        $calcDTO = [
+            'selectedSections' => $selectedSections,
+            'finalResults' => $finalResults,
+            'sectionTotals' => $sectionTotals,
+            'subsectionTotals' => $subsectionTotals,
+            'totalSum' => $totalSum,
+            'sectionLabels' => $sectionLabels,
+        ];
 
         return $calcDTO;
     }
 
-    public static function generateCsvContent($selectedSections, $finalResults, $cropType)
+
+    public static function generateCsvContent($selectedSections, $finalResults, $jsonName)
     {
         $content = fopen('php://temp', 'w');
 
-        fputcsv($content, ['Cultura:', strtoupper($cropType)]);
-        fputcsv($content, ['Custo Total por ha']);
+        fputcsv($content, ['Tipo: ', strtoupper($jsonName)]);
+        fputcsv($content, ['Custo total por área']);
         fputcsv($content, []);
-        fputcsv($content, ['Atividade Agrícola', 'Operações', 'Campo', 'Valor Final']);
+        fputcsv($content, ['Atividade', 'Operações', 'Campo', 'Valor Final']);
 
         foreach ($selectedSections as $section) {
             if (isset($finalResults[$section])) {
@@ -165,7 +182,9 @@ class Calculator
 
                     foreach ($values as $inputName => $inputValue) {
                         fputcsv($content, [
-                            '', '', ucfirst(str_replace('_', ' ', $inputName)),
+                            '',
+                            '',
+                            ucfirst(str_replace('_', ' ', $inputName)),
                             is_numeric($inputValue) ? number_format($inputValue, 2, ',', '.') : $inputValue
                         ]);
                     }
@@ -178,9 +197,9 @@ class Calculator
         return $content;
     }
 
-    public static function preparePdfData($cropType)
+    public static function preparePdfData($jsonName)
     {
-        $multiplicadoresPath = storage_path("app/multiplicadores/{$cropType}.json");
+        $multiplicadoresPath = storage_path("app/multiplicadores/{$jsonName}.json");
 
         if (!file_exists($multiplicadoresPath)) {
             return ['error' => 'Arquivo de multiplicadores não encontrado.'];

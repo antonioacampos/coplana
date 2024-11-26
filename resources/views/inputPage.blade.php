@@ -55,12 +55,16 @@
 
 <style>
   body {
-    background-image: url('{{ asset('background3.png') }}'); /* Substitua pelo caminho correto */
+    background-image: url('{{ asset('background3.webp') }}');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
     font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
   }
+
 
  
   .card-header h1, .card-header h2, .card-header a, .card-body {
@@ -75,5 +79,68 @@
     border-radius: 5px;
     padding: 10px 20px;
     font-weight: bold;
+  }body {
+    background-image: url('{{ asset('background3.webp') }}');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+  }
+
+  .card-header h1,
+  .card-header h5,
+  .card-body,
+  .card-title {
+    color: white;
+  }
+
+  .card {
+    background-color: rgba(10, 55, 23, 0.7) !important;
+  }
+
+  .btn-primary,
+  .btn-success {
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-weight: bold;
+  }
+
+  @media (max-width: 576px) {
+    .card-header h1 {
+      font-size: 1.5rem;
+    }
+
+    .card-header h5 {
+      font-size: 1rem;
+    }
+
+    .card-body h2 {
+      font-size: 1.25rem;
+    }
+
+    .card-body h3 {
+      font-size: 1rem;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .card-header h1 {
+      font-size: 2rem;
+    }
+
+    .card-header h5 {
+      font-size: 1.25rem;
+    }
+
+    .card-body h2 {
+      font-size: 1.5rem;
+    }
+
+    .card-body h3 {
+      font-size: 1.25rem;
+    }
   }
 </style>

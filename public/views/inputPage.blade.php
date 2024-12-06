@@ -5,7 +5,7 @@
     <div class="card mt-3 mb-3">
       <div class="card-body p-0">
         <div class="card-header">
-          <a href="{{ route('home') }}">
+          <a href="./">
             <h6>< Página inicial</h6>
           </a>
 

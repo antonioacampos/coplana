@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\InterfaceController;
 
-Route::get('/coplana', [InterfaceController::Class, 'home']);
+Route::get('/coplana', [InterfaceController::Class, 'home'])->name('home');
 
 Route::get('coplana/calculadora/{cropType}', [InterfaceController::class, 'index'])->name('calculadora');
 Route::post('coplana/secoes/{cropType}', [InterfaceController::class, 'getInputs'])->name('get.inputs');

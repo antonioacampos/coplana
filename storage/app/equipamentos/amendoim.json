@@ -1,0 +1,125 @@
+{
+    "equipamentos": {
+        "Trator": {
+            "sections": ["depreciacao_tratores"],
+            "conteudo": [
+            {
+                "modelo": "New Holland TL 75",
+                "valor": 180000
+            },
+            {
+                "modelo": "John Deere 6130J",
+                "valor": 290000
+            },
+            {
+                "modelo": "Massey Ferguson 7318",
+                "valor": 600000
+            }
+        ]},
+        "Plantadeira": {
+            "sections": ["depreciacao_plantadeira"],
+            "conteudo": [
+            {
+                "modelo": "Semeato 4 Linhas",
+                "valor": 25000
+            },
+            {
+                "modelo": "Tatu PHT4 4 Linhas",
+                "valor": 150000
+            },
+            {
+                "modelo": "Tatu Mandui 6 Linhas",
+                "valor": 280000
+            }
+        ]},
+        "Cultivador": {
+            "sections": ["depreciacao_grades_aradoras", "depreciacao_adubadoras"],
+            "conteudo": [
+            {
+                "modelo": "Semeato 3 Discos",
+                "valor": 7500
+            },
+            {
+                "modelo": "Massey Ferguson 5 Discos",
+                "valor": 15000
+            },
+            {
+                "modelo": "John Deere 9 Discos",
+                "valor": 30000
+            }
+        ]},
+        "Pulverizador": {
+            "sections": ["depreciacao_pulverizador"],
+            "conteudo": [
+            {
+                "modelo": "Jacto Condor 600L",
+                "valor": 20000
+            },
+            {
+                "modelo": "Jacto Advance 2000L",
+                "valor": 230000
+            },
+            {
+                "modelo": "Massey Ferguson 9330 Autopropelido",
+                "valor": 1500000
+            }
+        ]},
+        "Irrigação": {
+            "sections": [],
+            "conteudo": [
+            {
+                "modelo": "Toro Aspersão",
+                "valor": 30000
+            },
+            {
+                "modelo": "Valley Pivô Central",
+                "valor": 600000
+            }
+        ]},
+        "Aplicador de Corretivos": {
+            "sections": ["depreciacao_distribuidora_fertilizantes", "depreciacao_distribuidora_corretivos", 
+            "depreciacao_distribuidor_calcario"],
+            "conteudo": [
+            {
+                "modelo": "Jan Lancer 1300",
+                "valor": 25000
+            },
+            {
+                "modelo": "Tatu DCA 7500",
+                "valor": 60000
+            },
+            {
+                "modelo": "Tatu DCA Maxx 12000",
+                "valor": 150000
+            }
+        ]},
+        "Arrancador de Amendoim": {
+            "sections": ["depreciacao_colhedora"],
+            "conteudo": [
+            {
+                "modelo": "KBM Arrancador e Invertedor Simples",
+                "valor": 60000
+            },
+            {
+                "modelo": "KBM Arrancador e Invertedor Duplo",
+                "valor": 130000
+            }
+        ]},
+        "Transporte e Armazenamento": {
+            "sections": ["depreciacao_caminhoes"],
+            "conteudo": [
+            {
+                "modelo": "Volkswagen Delivery 6.160",
+                "valor": 120000
+            },
+            {
+                "modelo": "Mercedes-Benz Atego 1519",
+                "valor": 220000
+            },
+            {
+                "modelo": "Scania R 450",
+                "valor": 550000
+            }
+        ]}
+    }
+}

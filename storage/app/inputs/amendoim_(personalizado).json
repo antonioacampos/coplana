@@ -1,0 +1,114 @@
+{
+    "preparo": {
+        "label":"Preparo",        
+        "content":
+        [
+            {"name": "gradagem_pesada", "label": "passagem da Gradagem Pesada"},
+            {"name": "aracao_iveca", "label": "passagem da Aração (Iveca)"},
+            {"name": "gradagem_intermediaria", "label": "passagem da Gradagem Intermediária"},
+            {"name": "gradagem_niveladora", "label": "passagem da Gradagem Niveladora"},
+            {"name": "canteirizacao", "label": "passagem da Enxada Rotativa (Canteirização)"},
+            {"name": "subsolagem", "label": "passagem da Subsolagem"},
+            {"name": "pulverizacao_dessecacao", "label": "aplicação da Pulverização de Dessecação Pré-Plantio"},
+            {"name": "calcario", "label": "tonelada do Calcário"},
+            {"name": "fertilizante_fosfatado", "label": "tonelada do Fertilizante Fosfatado"},
+            {"name": "fertilizante_potassico", "label": "tonelada do Fertilizante Potássico"},
+            {"name": "fertilizante_nitrogenado", "label": "tonelada do Fertilizante Nitrogenado"},
+            {"name": "micronutrientes", "label": "tonelada dos Micronutrientes"},
+            {"name": "depreciacao_tratores", "label": "1 Trator Agrícola"},
+            {"name": "depreciacao_grades_aradoras", "label": "1 Grade Aradora"},
+            {"name": "depreciacao_adubadoras", "label": "1 Adubadora"},
+            {"name": "depreciacao_caminhoes", "label": "1 Caminhão"},
+            {"name": "combustivel", "label": "litro de combustível"},
+            {"name": "manutencao_preventiva", "label": "Manutenções Preventivas"},
+            {"name": "manutencao_corretiva", "label": "Manutenções Corretivas"},
+            {"name": "operadores_tratores", "label": "hora para Operadores de Tratores Agrícolas"},
+            {"name": "trabalhadores_agricolas", "label": "hora para Trabalhadores Agrícolas (Auxiliares)"},
+            {"name": "tecnico_agricola", "label": "hora para Técnicos Agrícolas"},
+            {"name": "tecnico_mecanizacao", "label": "hora para Técnicos em Mecanização Agrícola"},
+            {"name": "supervisor_campo", "label": "hora para Supervisores de Campo"},
+            {"name": "supervisor_admin", "label": "hora para Supervisores/Admin"},
+            {"name": "motoristas_caminhao", "label": "hora para 1 Motorista de Caminhão"}
+        ]
+    },
+    "aplicacao":{ 
+        "label" : "Aplicação", 
+        "content" : [
+        {"name": "calcario", "label": "tonelada do Calcário"},
+        {"name": "gesso_agricola", "label": "tonelada do Gesso Agrícola"},
+        {"name": "combustivel", "label": "litro de combustível"},
+        {"name": "manutencao_preventiva", "label": "Manutenções Preventivas"},
+        {"name": "manutencao_corretiva", "label": "Manutenções Corretivas"},
+        {"name": "depreciacao_tratores", "label": "1 Trator Agrícola"},
+        {"name": "depreciacao_grades_aradoras", "label": "1 Grade Aradora"},
+        {"name": "depreciacao_distribuidor_calcario", "label": "1 Distribuidor de calcário gesso agrícola"},
+        {"name": "depreciacao_caminhoes", "label": "1 Caminhão"},
+        {"name": "tecnico_agricola", "label": "hora para 1 Técnico Agrícola"},
+        {"name": "operador_trator", "label": "hora para 1 Operador de Tratores Agrícolas"},
+        {"name": "auxiliares_operacao", "label": "hora para 1 Auxiliares de Operação (de Tratoristas)"},
+        {"name": "motorista_caminhao", "label": "hora para 1 Motorista de Caminhão (Transporte de Corretivos)"},
+        {"name": "mao_de_obra_aplicacao", "label": "hora para a mão de obra de Manuseio e Aplicação Manual"}
+    ]},
+    "plantio": {
+        "label": "Plantio",
+        "content": [
+            {"name": "sementes_amendoim", "label": "tonelada da Semente de Amendoim"},
+            {"name": "fertilizante_nitrogenio", "label": "tonelada do Fertilizante Nitrogênio"},
+            {"name": "fertilizante_fosforo", "label": "tonelada do Fertilizante Fósforo"},
+            {"name": "fertilizante_potassio", "label": "tonelada do Fertilizante Potássio"},
+            {"name": "agua", "label": "metro cúbico de Água"},
+            {"name": "combustivel", "label": "litro de combustível"},
+            {"name": "manutencao_preventiva", "label": "Manutenções Preventivas"},
+            {"name": "manutencao_corretiva", "label": "Manutenções Corretivas"},
+            {"name": "depreciacao_tratores", "label": "1 Trator Agrícola"},
+            {"name": "depreciacao_plantadeira", "label": "1 Plantadeira de precisão"},
+            {"name": "depreciacao_caminhoes", "label": "1 Caminhão"},
+            {"name": "tecnico_agricola", "label": "hora para 1 Técnico Agrícola"},
+            {"name": "operador_trator", "label": "hora para 1 Operador de Trator Agrícola"},
+            {"name": "auxiliares_operacao", "label": "hora para 1 Auxiliar de Operação (de Tratoristas)"},
+            {"name": "motorista_caminhao", "label": "hora para 1 Motorista de Caminhão"}
+        ]
+    },
+    "manejo": {
+        "label": "Manejo",
+        "content": [
+            {"name": "pulverizacao_autopropelido", "label": "Pulverização com Autopropelido"},
+            {"name": "pulverizacao_arrasto", "label": "Pulverização com Pulverizador de Arrasto/Hidráulico"},
+            {"name": "fertilizante_nitrogenio_pos", "label": "quilo do Fertilizante Nitrogênio (pós-plantio)"},
+            {"name": "fertilizante_fosforo_pos", "label": "quilo do Fertilizante Fósforo (pós-plantio)"},
+            {"name": "fertilizante_potassio_pos", "label": "quilo do Fertilizante Potássio (pós-plantio)"},
+            {"name": "micronutrientes_pos", "label": "quilo dos Micronutrientes (pós-plantio)"},
+            {"name": "inseticidas", "label": "aplicação dos Inseticidas (manejo sanitário)"},
+            {"name": "fungicidas", "label": "aplicação dos Fungicidas (manejo sanitário)"},
+            {"name": "herbicidas", "label": "aplicação dos Herbicidas (manejo sanitário)"},
+            {"name": "combustivel", "label": "litro de combustível"},
+            {"name": "manutencao_preventiva", "label": "Manutenções Preventivas"},
+            {"name": "manutencao_corretiva", "label": "Manutenções Corretivas"},
+            {"name": "depreciacao_tratores", "label": "1 Trator Agrícola"},
+            {"name": "depreciacao_pulverizador", "label": "1 Pulverizador"},
+            {"name": "depreciacao_distribuidora_fertilizantes", "label": "1 Distribuidora de fertilizantes"},
+            {"name": "depreciacao_distribuidora_corretivos", "label": "1 Distribuidora de corretivos"},
+            {"name": "depreciacao_caminhoes", "label": "1 Caminhão"},
+            {"name": "tecnico_agricola", "label": "hora para 1 Técnico Agrícola"},
+            {"name": "operador_trator", "label": "hora para 1 Operador de Tratores Agrícolas"},
+            {"name": "auxiliares_operacao", "label": "hora para 1 Auxiliares de Operação (de Tratoristas)"},
+            {"name": "motorista_caminhao", "label": "hora para 1 Motorista de Caminhão (Transporte de Corretivos)"},
+            {"name": "mao_de_obra_aplicacao", "label": "hora para a mão de obra de Manuseio e Aplicação Manual"}
+        ]
+    },
+    "colheita": {
+        "label": "Colheita",
+        "content": [
+            {"name": "combustivel", "label": "litro de combustível"},
+            {"name": "manutencao_preventiva", "label": "Manutenções Preventivas"},
+            {"name": "manutencao_corretiva", "label": "Manutenções Corretivas"},
+            {"name": "depreciacao_caminhoes", "label": "1 Caminhão"},
+            {"name": "depreciacao_colhedora", "label": "1 Colhedora"},
+            {"name": "operador_colhedora", "label": "hora para 1 Operador de Colhedora"},
+            {"name": "auxiliares_colhedora", "label": "hora para 1 Auxiliar de Operador de Colhedora"},
+            {"name": "tecnico_agricola", "label": "hora para 1 Técnico Agrícola"},
+            {"name": "manuseador_carregador", "label": "hora para 1 Manuseador e Carregador de Produtos"},
+            {"name": "motoristas_caminhao", "label": "hora para 1 Motorista de Caminhão"}
+        ]
+    }
+}

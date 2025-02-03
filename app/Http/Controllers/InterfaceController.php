@@ -24,17 +24,55 @@ class InterfaceController extends Controller
         return view('inputPage', compact('inputs', 'cropType', 'sectionLabels'));
     }
 
+    // public function getInputs(Request $request, $cropType)
+    // {
+    //     $selectedSections = $request->input('sections', []);
+    //     $inputsDTO = Calculator::getInputs($selectedSections, $cropType);
+
+    //     $sectionLabels = $inputsDTO['sectionLabels'];
+    //     $inputs = $inputsDTO['inputs'];
+
+    //     $equipmentModels = [];
+    //     foreach ($inputs as $input) {
+    //         if (in_array($input['name'], ["depreciacao_tratores", "depreciacao_caminhoes", "depreciacao_plantadeira",
+    //         "depreciacao_grades_aradoras", "depreciacao_adubadoras", "depreciacao_pulverizador",
+    //         "depreciacao_distribuidora_fertilizantes", "depreciacao_distribuidora_corretivos", 
+    //         "depreciacao_distribuidor_calcario", "depreciacao_colhedora"])) {
+    //             $equipmentModels[$input['name']] = Calculator::loadEquipmentModels($input['name']);
+    //         }
+    //     }
+    //     dd($equipmentModels);
+    //     return view('inputPage', compact('inputs', 'selectedSections', 'cropType', 'sectionLabels', 'equipmentModels'));
+    // }
+
     public function getInputs(Request $request, $cropType)
     {
         $selectedSections = $request->input('sections', []);
         $inputsDTO = Calculator::getInputs($selectedSections, $cropType);
-        
+
         $sectionLabels = $inputsDTO['sectionLabels'];
         $inputs = $inputsDTO['inputs'];
-
-
-        return view('inputPage', compact('inputs', 'selectedSections', 'cropType', 'sectionLabels'));
+    
+        // Carregar todos os equipamentos do JSON correspondente ao cropType
+        $allEquipmentModels = Calculator::loadEquipmentModels($cropType);
+        // dd($allEquipmentModels);
+        // Filtrar os modelos de equipamentos relevantes para os inputs
+        $equipmentModels = [];
+        foreach ($inputs as $input) {
+            if(isset($allEquipmentModels)){
+            foreach ($allEquipmentModels['equipamentos'] as $equipmentKey => $equipmentData) {
+                if (isset($equipmentData['sections']) && in_array($input['name'], $equipmentData['sections'])) {
+                    $equipmentModels[$input['name']] = $equipmentData['conteudo'];
+                }
+            }
+        }
+        }
+        // dd($equipmentModels);
+        // dd($equipmentModels);
+        return view('inputPage', compact('inputs', 'selectedSections', 'cropType', 'sectionLabels', 'equipmentModels'));
     }
+    
+
 
     public function calcular(Request $request)
     {
@@ -54,7 +92,7 @@ class InterfaceController extends Controller
         $sectionLabels = $calcDTO['sectionLabels'];
         $sectionTotals = $calcDTO['sectionTotals'];
         $subsectionTotals = $calcDTO['subsectionTotals'];
-
+        
         return view('displayResults', [
             'cropType' => $cropType,
             'selectedSections' => $selectedSections,

@@ -90,6 +90,18 @@ class Calculator
         return $inputsDTO;
     }
 
+    public static function loadEquipmentModels($jsonName)
+    {
+        $filePath = storage_path("app/equipamentos/$jsonName.json");
+
+        if (!file_exists($filePath)) {
+            return null;
+        }
+
+        return json_decode(file_get_contents($filePath), true);
+    }
+
+
     public static function calculate($jsonName, $selectedSections, $inputs)
     {
         $multiplicadoresPath = storage_path("app/multiplicadores/{$jsonName}.json");
@@ -108,35 +120,40 @@ class Calculator
         $sectionTotals = [];
         $subsectionTotals = [];
         $totalSum = 0;
-
+        // dd($inputs, $selectedSections);
         foreach ($inputs as $inputName => $inputValue) {
-            if (is_numeric($inputValue)) {
-                foreach ($selectedSections as $section) {
-                    if (isset($multiplicadores[$section]['content'])) {
-                        foreach ($multiplicadores[$section]['content'] as $subsection => $subsectionData) {
-                            if (isset($subsectionData['multiplicadores'][$inputName])) {
-                                $resultado = $inputValue * $subsectionData['multiplicadores'][$inputName];
+            $custo = isset($inputValue['modelo']) && is_numeric($inputValue['modelo'])
+                ? $inputValue['modelo']
+                : (is_numeric($inputValue['custo']) ? $inputValue['custo'] : null);
 
-                                $finalResults[$section][$subsection][$inputName] = $resultado;
-
-                                if (!isset($subsectionTotals[$section][$subsection])) {
-                                    $subsectionTotals[$section][$subsection] = 0;
-                                }
-                                $subsectionTotals[$section][$subsection] += $resultado;
-
-                                if (!isset($sectionTotals[$section])) {
-                                    $sectionTotals[$section] = 0;
-                                }
-                                $sectionTotals[$section] += $resultado;
-
-                                $totalSum += $resultado;
-                            }
-                        }
-                    }
-                }
-            } else {
+            if ($custo === null) {
                 foreach ($selectedSections as $section) {
                     $finalResults[$section][$inputName] = "Valor inválido";
+                }
+                continue;
+            }
+            foreach ($selectedSections as $section) {
+                if (isset($multiplicadores[$section]['content'])) {
+                    foreach ($multiplicadores[$section]['content'] as $subsection => $subsectionData) {
+
+                        if (isset($subsectionData['multiplicadores'][$inputName])) {
+                            $resultado = $custo * $subsectionData['multiplicadores'][$inputName];
+
+                            $finalResults[$section][$subsection][$inputName] = $resultado;
+
+                            if (!isset($subsectionTotals[$section][$subsection])) {
+                                $subsectionTotals[$section][$subsection] = 0;
+                            }
+                            $subsectionTotals[$section][$subsection] += $resultado;
+
+                            if (!isset($sectionTotals[$section])) {
+                                $sectionTotals[$section] = 0;
+                            }
+                            $sectionTotals[$section] += $resultado;
+
+                            $totalSum += $resultado;
+                        }
+                    }
                 }
             }
         }
@@ -162,7 +179,6 @@ class Calculator
 
         return $calcDTO;
     }
-
 
     public static function generateCsvContent($selectedSections, $finalResults, $jsonName)
     {

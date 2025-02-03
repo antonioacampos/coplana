@@ -8,11 +8,11 @@
       </div>
       <div class="card-body">
         <h2 class="mb-4">Calculadoras:</h2>
-        <div class="row">
+        <div class="">
           @foreach ($cropTypes as $cropType)
-            <div class="col-12 col-sm-6 col-lg-4 mb-3">
+            <div class="mb-3">
               <a href="{{ route('calculadora', ['cropType' => $cropType]) }}" class="text-decoration-none">
-                <h3 class="text-success">Cultura de {{ $cropType }}</h3>
+                <h3 class="text-success">Cultura de {{ str_replace('_', ' ', ucwords($cropType)) }}</h3>
               </a>
             </div>
           @endforeach

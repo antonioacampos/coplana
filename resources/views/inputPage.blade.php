@@ -5,9 +5,9 @@
     <div class="card mt-3 mb-3">
       <div class="card-body p-0">
         <div class="card-header">
-          <a href="./">
+          <a href="{{ route('home') }}">
             <h6>
-              < Página inicial</h6>
+              < Página inicial </h6>
           </a>
 
           <h1>Calculadora de {{ str_replace('_', ' ', ucwords($cropType)) }}</h1>
@@ -106,15 +106,17 @@
   }
 
   select.form-select {
-    background-color: #D3D3D3; /* Fundo mais claro */
+    background-color: #D3D3D3;
+    /* Fundo mais claro */
     border-width: 2px;
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
-}
+  }
 
-select.form-select:focus {
-    border-color: #007bff; /* Azul para foco */
+  select.form-select:focus {
+    border-color: #007bff;
+    /* Azul para foco */
     box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
-}
+  }
 
 
   body {

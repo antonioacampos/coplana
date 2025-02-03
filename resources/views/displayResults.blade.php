@@ -2,7 +2,7 @@
 
 @section('content')
   <div class="container p-2 pt-3 mt-3 mb-3">
-    <a href="./">
+    <a href="{{ route('home') }}">
       <h6>
         < Página inicial</h6>
     </a>

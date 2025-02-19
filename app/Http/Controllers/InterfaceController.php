@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Barryvdh\DomPDF\Facade\PDF;
-use Symfony\Component\HttpFoundation\StreamedResponse;
 use App\Services\Calculator;
+use Barryvdh\DomPDF\Facade\PDF;
+use Illuminate\Support\Facades\Storage;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class InterfaceController extends Controller
 {
@@ -23,6 +24,75 @@ class InterfaceController extends Controller
 
         return view('inputPage', compact('inputs', 'cropType', 'sectionLabels'));
     }
+
+    
+
+    public function create()
+    {
+        return view('create');
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'folder' => 'required|in:equipamentos,inputs,multiplicadores',
+            'filename' => 'required|string',
+            'content' => 'required|json',
+        ]);
+
+        $filePath = "{$request->folder}/{$request->filename}.json";
+
+        if (Storage::exists($filePath)) {
+            return redirect()->route('json.create')->with('error', 'Arquivo já existe.');
+        }
+
+        Storage::put($filePath, $request->content);
+
+        return redirect()->route('json.create')->with('success', 'Arquivo criado com sucesso!');
+    }
+
+    public function edit($folder, $filename)
+    {
+        $filePath = "app/{$folder}/{$filename}.json";
+
+        if (!Storage::exists($filePath)) {
+            return redirect()->route('json.index')->with('error', 'Arquivo não encontrado.');
+        }
+
+        $content = Storage::get($filePath);
+        return view('json.edit', compact('folder', 'filename', 'content'));
+    }
+
+    public function update(Request $request, $folder, $filename)
+    {
+        $request->validate([
+            'content' => 'required|json',
+        ]);
+
+        $filePath = "app/{$folder}/{$filename}.json";
+
+        if (!Storage::exists($filePath)) {
+            return redirect()->route('json.index')->with('error', 'Arquivo não encontrado.');
+        }
+
+        Storage::put($filePath, $request->content);
+
+        return redirect()->route('json.index')->with('success', 'Arquivo atualizado com sucesso!');
+    }
+
+    public function destroy($folder, $filename)
+    {
+        $filePath = "app/{$folder}/{$filename}.json";
+
+        if (Storage::exists($filePath)) {
+            Storage::delete($filePath);
+            return redirect()->route('json.index')->with('success', 'Arquivo deletado com sucesso!');
+        }
+
+        return redirect()->route('json.index')->with('error', 'Arquivo não encontrado.');
+    }
+
+
 
     public function getInputs(Request $request, $cropType)
     {

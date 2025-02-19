@@ -17,6 +17,10 @@ Route::post('coplana/calcular', [InterfaceController::class, 'calcular'])->name(
 Route::get('coplana/export/csv', [InterfaceController::class, 'exportCsv'])->name('export.csv');
 Route::get('coplana/export/pdf', [InterfaceController::class, 'exportPdf'])->name('export.pdf');
 
+Route::get('coplana/createJson', [InterfaceController::class, 'create'])->name('json.create');
+Route::post('coplana/createJson', [InterfaceController::class, 'store'])->name('json.store');
+
+
 Route::fallback(function () {
     return view('errors.404');
 });

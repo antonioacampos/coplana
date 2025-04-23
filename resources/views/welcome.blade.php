@@ -13,7 +13,7 @@
             <div class="mb-3">
               <a href="{{ route('calculadora', ['cropType' => $cropType]) }}" class="text-decoration-none">
                 <h3 class="text-success">Cultura de {{ str_replace('_', ' ', ucwords($cropType)) }}</h3>
-              </a>
+                </a>
             </div>
           @endforeach
         </div>

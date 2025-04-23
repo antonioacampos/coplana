@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-  <div class="d-flex justify-content-center align-items-center">
+  <div class="container">
     <div class="card mt-3 mb-3">
       <div class="card-body p-0">
         <div class="card-header">
@@ -11,7 +11,7 @@
           <h1>Criar Novo JSON</h1>
         </div>
 
-        <form action="{{ route('json.store') }}" method="POST">
+        <form action="{{ route('json.store') }}" method="POST" id="jsonForm">
           @csrf
           <div class="form-group p-3">
             <label for="folder" class="font-weight-bold">Pasta:</label>
@@ -26,10 +26,15 @@
             <label for="filename" class="font-weight-bold">Nome do arquivo:</label>
             <input type="text" name="filename" class="form-control border-secondary shadow-sm" id="filename" required>
           </div>
-
+          @if ($errors->has('content'))
+            <div class="alert alert-danger">
+              {{ $errors->first('content') }}
+            </div>
+          @endif
           <div class="form-group p-3">
             <label for="content" class="font-weight-bold">Conteúdo JSON:</label>
-            <textarea name="content" class="form-control border-secondary shadow-sm" id="content" rows="8" style="width: 100%;"></textarea>
+            <textarea name="content" class="form-control border-secondary shadow-sm" id="json" rows="8"
+              style="width: 100%;"></textarea>
           </div>
 
           <button type="submit" class="btn btn-success m-2">Criar</button>
@@ -37,6 +42,26 @@
       </div>
     </div>
   </div>
+
+  <script>
+    function isValidJSON(str) {
+      try {
+        JSON.parse(str);
+        return true;
+      } catch (e) {
+        return false;
+      }
+    }
+
+    document.getElementById('jsonForm').addEventListener('submit', function(e) {
+      const content = document.getElementById('json').value;
+
+      if (!isValidJSON(content)) {
+        e.preventDefault();
+        alert('O conteúdo não é um JSON válido. Por favor, corrija e tente novamente.');
+      }
+    });
+  </script>
 @endsection
 
 <style>

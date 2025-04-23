@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Services\Calculator;
+use App\Services\JsonFileManager;
 use Barryvdh\DomPDF\Facade\PDF;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\StreamedResponse;
@@ -34,33 +35,54 @@ class InterfaceController extends Controller
 
     public function store(Request $request)
     {
+        // dd($request->all());
         $request->validate([
             'folder' => 'required|in:equipamentos,inputs,multiplicadores',
             'filename' => 'required|string',
             'content' => 'required|json',
         ]);
 
-        $filePath = "{$request->folder}/{$request->filename}.json";
+        try {
+            $content = json_decode($request->content, true);
+            // dd($content);
+            // if (!JsonFileManager::validateJsonStructure($content, $request->folder)) {
+            //     dd("entrou1");
+            //     return redirect()->route('json.create')
+            //         ->with('error', 'Estrutura JSON inválida para o tipo selecionado.');
+            // }
 
-        if (Storage::exists($filePath)) {
-            return redirect()->route('json.create')->with('error', 'Arquivo já existe.');
+            // if (JsonFileManager::exists($request->folder, $request->filename)) {
+            //     dd("entrou2"); 
+            //     return redirect()->route('json.create')
+            //         ->with('error', 'Arquivo já existe.');
+            // }
+
+            JsonFileManager::store($request->folder, $request->filename, $content);
+            dd("entrou3");
+            return redirect()->route('json.create')
+                ->with('success', 'Arquivo criado com sucesso!');
+        } catch (\Exception $e) {
+            dd("entrou4");
+            return redirect()->route('json.create')
+                ->with('error', 'Erro ao criar arquivo: ' . $e->getMessage());
         }
-
-        Storage::put($filePath, $request->content);
-
-        return redirect()->route('json.create')->with('success', 'Arquivo criado com sucesso!');
     }
 
     public function edit($folder, $filename)
     {
-        $filePath = "app/{$folder}/{$filename}.json";
+        try {
+            $content = JsonFileManager::get($folder, $filename);
+            
+            if ($content === null) {
+                return redirect()->route('json.index')
+                    ->with('error', 'Arquivo não encontrado.');
+            }
 
-        if (!Storage::exists($filePath)) {
-            return redirect()->route('json.index')->with('error', 'Arquivo não encontrado.');
+            return view('json.edit', compact('folder', 'filename', 'content'));
+        } catch (\Exception $e) {
+            return redirect()->route('json.index')
+                ->with('error', 'Erro ao editar arquivo: ' . $e->getMessage());
         }
-
-        $content = Storage::get($filePath);
-        return view('json.edit', compact('folder', 'filename', 'content'));
     }
 
     public function update(Request $request, $folder, $filename)
@@ -69,27 +91,45 @@ class InterfaceController extends Controller
             'content' => 'required|json',
         ]);
 
-        $filePath = "app/{$folder}/{$filename}.json";
+        try {
+            $content = json_decode($request->content, true);
+            
+            if (!JsonFileManager::validateJsonStructure($content, $folder)) {
+                return redirect()->route('json.edit', [$folder, $filename])
+                    ->with('error', 'Estrutura JSON inválida para o tipo selecionado.');
+            }
 
-        if (!Storage::exists($filePath)) {
-            return redirect()->route('json.index')->with('error', 'Arquivo não encontrado.');
+            if (!JsonFileManager::exists($folder, $filename)) {
+                return redirect()->route('json.index')
+                    ->with('error', 'Arquivo não encontrado.');
+            }
+
+            JsonFileManager::store($folder, $filename, $content);
+
+            return redirect()->route('json.index')
+                ->with('success', 'Arquivo atualizado com sucesso!');
+        } catch (\Exception $e) {
+            return redirect()->route('json.edit', [$folder, $filename])
+                ->with('error', 'Erro ao atualizar arquivo: ' . $e->getMessage());
         }
-
-        Storage::put($filePath, $request->content);
-
-        return redirect()->route('json.index')->with('success', 'Arquivo atualizado com sucesso!');
     }
 
     public function destroy($folder, $filename)
     {
-        $filePath = "app/{$folder}/{$filename}.json";
+        try {
+            if (!JsonFileManager::exists($folder, $filename)) {
+                return redirect()->route('json.index')
+                    ->with('error', 'Arquivo não encontrado.');
+            }
 
-        if (Storage::exists($filePath)) {
-            Storage::delete($filePath);
-            return redirect()->route('json.index')->with('success', 'Arquivo deletado com sucesso!');
+            JsonFileManager::delete($folder, $filename);
+
+            return redirect()->route('json.index')
+                ->with('success', 'Arquivo deletado com sucesso!');
+        } catch (\Exception $e) {
+            return redirect()->route('json.index')
+                ->with('error', 'Erro ao deletar arquivo: ' . $e->getMessage());
         }
-
-        return redirect()->route('json.index')->with('error', 'Arquivo não encontrado.');
     }
 
 

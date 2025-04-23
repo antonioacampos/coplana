@@ -6,32 +6,17 @@ class Calculator
 {
     public static function listInputs()
     {
-        if (!is_dir(storage_path("app/inputs"))) {
-            mkdir(storage_path("app/inputs"), 0755);
-        }
-
-        $path = storage_path('app/inputs/*.json');
-        $files = glob($path);
-
-        return array_map(function ($file) {
-            return pathinfo($file, PATHINFO_FILENAME);
-        }, $files);
+        return JsonFileManager::listFiles('inputs');
     }
 
     public static function loadJsonData($jsonName)
     {
-        $filePath = storage_path("app/inputs/{$jsonName}.json");
-
-        if (!file_exists($filePath)) {
-            return null;
-        }
-
-        return json_decode(file_get_contents($filePath), true);
+        return JsonFileManager::get('inputs', $jsonName);
     }
 
     public static function getSectionLabels($jsonName)
     {
-        $allSections = Calculator::loadJsonData($jsonName);
+        $allSections = self::loadJsonData($jsonName);
 
         if (!$allSections) {
             return back()->withErrors('Arquivo de dados não encontrado');
@@ -92,35 +77,22 @@ class Calculator
 
     public static function loadEquipmentModels($jsonName)
     {
-        $filePath = storage_path("app/equipamentos/$jsonName.json");
-
-        if (!file_exists($filePath)) {
-            return null;
-        }
-
-        return json_decode(file_get_contents($filePath), true);
+        return JsonFileManager::get('equipamentos', $jsonName);
     }
-
 
     public static function calculate($jsonName, $selectedSections, $inputs)
     {
-        $multiplicadoresPath = storage_path("app/multiplicadores/{$jsonName}.json");
+        $multiplicadores = JsonFileManager::get('multiplicadores', $jsonName);
 
-        if (!file_exists($multiplicadoresPath)) {
+        if (!$multiplicadores) {
             return response()->json(['error' => 'Arquivo de multiplicadores não encontrado'], 404);
-        }
-
-        $multiplicadores = json_decode(file_get_contents($multiplicadoresPath), true);
-
-        if (json_last_error() !== JSON_ERROR_NONE) {
-            return response()->json(['error' => 'Erro ao decodificar o arquivo JSON de multiplicadores'], 500);
         }
 
         $finalResults = [];
         $sectionTotals = [];
         $subsectionTotals = [];
         $totalSum = 0;
-        // dd($inputs, $selectedSections);
+
         foreach ($inputs as $inputName => $inputValue) {
             $custo = isset($inputValue['modelo']) && is_numeric($inputValue['modelo'])
                 ? $inputValue['modelo']
@@ -132,10 +104,10 @@ class Calculator
                 }
                 continue;
             }
+
             foreach ($selectedSections as $section) {
                 if (isset($multiplicadores[$section]['content'])) {
                     foreach ($multiplicadores[$section]['content'] as $subsection => $subsectionData) {
-
                         if (isset($subsectionData['multiplicadores'][$inputName])) {
                             $resultado = $custo * $subsectionData['multiplicadores'][$inputName];
 
@@ -168,7 +140,7 @@ class Calculator
             }
         }
 
-        $calcDTO = [
+        return [
             'selectedSections' => $selectedSections,
             'finalResults' => $finalResults,
             'sectionTotals' => $sectionTotals,
@@ -176,8 +148,6 @@ class Calculator
             'totalSum' => $totalSum,
             'sectionLabels' => $sectionLabels,
         ];
-
-        return $calcDTO;
     }
 
     public static function generateCsvContent($selectedSections, $finalResults, $jsonName)
@@ -215,16 +185,10 @@ class Calculator
 
     public static function preparePdfData($jsonName)
     {
-        $multiplicadoresPath = storage_path("app/multiplicadores/{$jsonName}.json");
+        $multiplicadores = JsonFileManager::get('multiplicadores', $jsonName);
 
-        if (!file_exists($multiplicadoresPath)) {
+        if (!$multiplicadores) {
             return ['error' => 'Arquivo de multiplicadores não encontrado.'];
-        }
-
-        $multiplicadores = json_decode(file_get_contents($multiplicadoresPath), true);
-
-        if (json_last_error() !== JSON_ERROR_NONE) {
-            return ['error' => 'Erro ao decodificar o arquivo JSON de multiplicadores.'];
         }
 
         $sectionLabels = [];

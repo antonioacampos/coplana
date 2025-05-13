@@ -12,3 +12,8 @@ destinado ao uso pela Coplana Cooperativa Agroindustrial.
 O projeto utiliza uma abordagem baseada em objetos genéricos, permitindo maior escalabilidade e reutilização.
 
 Sistema projetado para não permitir gerenciamento de culturas (objetos JSON) através da interface Web.
+
+### Docker
+```
+docker run -p 8080:80 --env-file .env coplana-system
+```

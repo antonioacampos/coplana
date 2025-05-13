@@ -17,12 +17,15 @@ Route::post('coplana/calcular', [InterfaceController::class, 'calcular'])->name(
 Route::get('coplana/export/csv', [InterfaceController::class, 'exportCsv'])->name('export.csv');
 Route::get('coplana/export/pdf', [InterfaceController::class, 'exportPdf'])->name('export.pdf');
 
-Route::get('coplana/create', [InterfaceController::class, 'create'])->name('json.create');
-Route::post('coplana/create', [InterfaceController::class, 'store'])->name('json.store');
-
-Route::get('coplana/list', [InterfaceController::class, 'index'])->name('json.list');
-
-
+// JSON Management Routes
+Route::prefix('json')->group(function () {
+    Route::get('/', [InterfaceController::class, 'jsonIndex'])->name('json.index');
+    Route::get('/create', [InterfaceController::class, 'create'])->name('json.create');
+    Route::post('/store', [InterfaceController::class, 'store'])->name('json.store');
+    Route::get('/{folder}/{filename}/edit', [InterfaceController::class, 'edit'])->name('json.edit');
+    Route::put('/{folder}/{filename}', [InterfaceController::class, 'update'])->name('json.update');
+    Route::delete('/{folder}/{filename}', [InterfaceController::class, 'destroy'])->name('json.destroy');
+});
 
 Route::fallback(function () {
     return view('errors.404');

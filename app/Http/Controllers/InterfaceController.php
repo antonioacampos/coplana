@@ -26,7 +26,10 @@ class InterfaceController extends Controller
         return view('inputPage', compact('inputs', 'cropType', 'sectionLabels'));
     }
 
-    
+    public function jsonIndex()
+    {
+        return view('json.index');
+    }
 
     public function create()
     {
@@ -35,7 +38,6 @@ class InterfaceController extends Controller
 
     public function store(Request $request)
     {
-        // dd($request->all());
         $request->validate([
             'folder' => 'required|in:equipamentos,inputs,multiplicadores',
             'filename' => 'required|string',
@@ -44,25 +46,17 @@ class InterfaceController extends Controller
 
         try {
             $content = json_decode($request->content, true);
-            // dd($content);
-            // if (!JsonFileManager::validateJsonStructure($content, $request->folder)) {
-            //     dd("entrou1");
-            //     return redirect()->route('json.create')
-            //         ->with('error', 'Estrutura JSON inválida para o tipo selecionado.');
-            // }
 
-            // if (JsonFileManager::exists($request->folder, $request->filename)) {
-            //     dd("entrou2"); 
-            //     return redirect()->route('json.create')
-            //         ->with('error', 'Arquivo já existe.');
-            // }
+            if (JsonFileManager::exists($request->folder, $request->filename)) {
+                return redirect()->route('json.create')
+                    ->with('error', 'Arquivo já existe.');
+            }
 
             JsonFileManager::store($request->folder, $request->filename, $content);
-            dd("entrou3");
-            return redirect()->route('json.create')
+
+            return redirect()->route('json.index')
                 ->with('success', 'Arquivo criado com sucesso!');
         } catch (\Exception $e) {
-            dd("entrou4");
             return redirect()->route('json.create')
                 ->with('error', 'Erro ao criar arquivo: ' . $e->getMessage());
         }
@@ -93,11 +87,6 @@ class InterfaceController extends Controller
 
         try {
             $content = json_decode($request->content, true);
-            
-            if (!JsonFileManager::validateJsonStructure($content, $folder)) {
-                return redirect()->route('json.edit', [$folder, $filename])
-                    ->with('error', 'Estrutura JSON inválida para o tipo selecionado.');
-            }
 
             if (!JsonFileManager::exists($folder, $filename)) {
                 return redirect()->route('json.index')
@@ -132,8 +121,6 @@ class InterfaceController extends Controller
         }
     }
 
-
-
     public function getInputs(Request $request, $cropType)
     {
         $selectedSections = $request->input('sections', []);
@@ -158,8 +145,6 @@ class InterfaceController extends Controller
         return view('inputPage', compact('inputs', 'selectedSections', 'cropType', 'sectionLabels', 'equipmentModels'));
     }
     
-
-
     public function calcular(Request $request)
     {
         if (!$request->has('sections') || !$request->has('inputs')) {
